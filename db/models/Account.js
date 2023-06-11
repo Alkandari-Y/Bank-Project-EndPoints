@@ -1,0 +1,19 @@
+const { Schema, model } = require("mongoose");
+
+const AccountSchema = Schema(
+  {
+    owner: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    amount: {
+      type: Number,
+      default: 0,
+      min: [0, "Account balance cannot be negative"],
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = model("Account", AccountSchema);
