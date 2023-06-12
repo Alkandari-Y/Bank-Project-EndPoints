@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\r\n}",
+							"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"testuser\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,14 +24,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/api/auth/v3/login",
+							"raw": "{{baseUrl}}auth/v3/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}auth"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"auth",
 								"v3",
 								"login"
 							]
@@ -49,12 +46,12 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "testuser",
+									"value": "testuser4",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "testuser",
+									"value": "testuser4",
 									"type": "text"
 								},
 								{
@@ -65,14 +62,11 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:8000/api/auth/v3/register",
+							"raw": "{{baseUrl}}auth/v3/register",
 							"host": [
-								"localhost"
+								"{{baseUrl}}auth"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"auth",
 								"v3",
 								"register"
 							]
@@ -93,7 +87,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -101,14 +95,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/api/auth/v3/profile",
+							"raw": "{{baseUrl}}auth/v3/profile",
 							"host": [
-								"localhost"
+								"{{baseUrl}}auth"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"auth",
 								"v3",
 								"profile"
 							]
@@ -124,7 +115,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -132,16 +123,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/api/auth/v3/profile",
+							"raw": "{{baseUrl}}auth/v3/users",
 							"host": [
-								"localhost"
+								"{{baseUrl}}auth"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"auth",
 								"v3",
-								"profile"
+								"users"
 							]
 						}
 					},
@@ -155,7 +143,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NTk4MDMxLCJpYXQiOjE2ODY1NTQyOTh9.bPk9ZfHy0kkwN2hMiUw_13yrUDSneDwF0Et-ZeX1-Sc",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -168,25 +156,21 @@
 								{
 									"key": "password",
 									"value": "testuser",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								},
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/yayal/OneDrive/Pictures/Portraits/bg-white.jpg"
+									"src": "/C:/Users/yayal/OneDrive/Pictures/meme/e68.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:8000/api/auth/v3/profile",
+							"raw": "{{baseUrl}}auth/v3/profile",
 							"host": [
-								"localhost"
+								"{{baseUrl}}auth"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"auth",
 								"v3",
 								"profile"
 							]
@@ -207,7 +191,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -215,14 +199,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/api/bank/v3/balance",
+							"raw": "{{baseUrl}}bank/v3/balance",
 							"host": [
-								"localhost"
+								"{{baseUrl}}bank"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"bank",
 								"v3",
 								"balance"
 							]
@@ -238,7 +219,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -246,14 +227,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/api/bank/v3/transactions",
+							"raw": "{{baseUrl}}bank/v3/transactions",
 							"host": [
-								"localhost"
+								"{{baseUrl}}bank"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"bank",
 								"v3",
 								"transactions"
 							]
@@ -269,7 +247,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NzY1MjI4LCJpYXQiOjE2ODY1NTQ0NjV9.EIBrgljTVsFo4rYPE5_nO-sOL368IfyjpspbThFDSo4",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -286,14 +264,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/api/bank/v3/deposit",
+							"raw": "{{baseUrl}}bank/v3/deposit",
 							"host": [
-								"localhost"
+								"{{baseUrl}}bank"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"bank",
 								"v3",
 								"deposit"
 							]
@@ -309,48 +284,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NzY1MjI4LCJpYXQiOjE2ODY1NTQ0NjV9.EIBrgljTVsFo4rYPE5_nO-sOL368IfyjpspbThFDSo4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 6\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8000/api/bank/v3/transfer/testuser23",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"bank",
-								"v3",
-								"transfer",
-								"testuser23"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Withdraw",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NzY1MjI4LCJpYXQiOjE2ODY1NTQ0NjV9.EIBrgljTVsFo4rYPE5_nO-sOL368IfyjpspbThFDSo4",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -367,14 +301,49 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/api/bank/v3/withdraw",
+							"raw": "{{baseUrl}}bank/v3/transfer/targetuser",
 							"host": [
-								"localhost"
+								"{{baseUrl}}bank"
 							],
-							"port": "8000",
 							"path": [
-								"api",
-								"bank",
+								"v3",
+								"transfer",
+								"targetuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}bank/v3/withdraw",
+							"host": [
+								"{{baseUrl}}bank"
+							],
+							"path": [
 								"v3",
 								"withdraw"
 							]
