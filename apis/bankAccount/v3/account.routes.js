@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const { validate } = require("express-validation");
-const { amountValidationSchema } = require("../../../utils/valiators/account.validators");
+const { amountValidationSchema } = require("../../../utils/validators/account.validators");
 const {
   getAccountByUserName,
   getUserAccount,

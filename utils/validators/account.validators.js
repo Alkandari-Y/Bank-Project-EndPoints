@@ -1,8 +1,10 @@
 const { Joi } = require("express-validation");
 
+const amount = Joi.number().min(1)
+
 const amountValidationSchema = {
   body: Joi.object({
-    amount: Joi.number().min(1).required(),
+    amount: amount.required(),
   }),
 };
 

@@ -89,12 +89,12 @@ exports.withdrawAmount = async (req, res, next) => {
 
 exports.transferAmount = async (req, res, next) => {
   try {
-    if (req.user._id.equals(req.receiver._id)) {
+    if (req.user.account.equals(req.receiver._id)) {
       return next({
         status: 400,
         name: "Validation Error",
         message:
-          "Cannot transfer to the same account from the same source. Use Deposit.",
+          "Cannot transfer to the same account. Use Deposit.",
       });
       }
       const senderAccount = await Account.findOne({ owner: req.user._id });

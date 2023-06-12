@@ -7,7 +7,7 @@ const {
     loginValidationSchema,
     registrationValidationSchema,
   userValidationSchema,
-} = require("../../../utils/valiators/auth.validators");
+} = require("../../../utils/validators/auth.validators");
 const {
   register,
   login,

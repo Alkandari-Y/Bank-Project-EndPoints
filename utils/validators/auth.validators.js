@@ -1,32 +1,33 @@
 const { Joi } = require('express-validation')
 
+const username = Joi.string();
+const image = Joi.string();
+const password = Joi.string().regex(/[a-zA-Z0-9]{8,30}/);
+
 const loginValidationSchema = {
     body: Joi.object({
-      username: Joi.string()
+      username: username
         .required(),
-      password: Joi.string()
-        .regex(/[a-zA-Z0-9]{8,30}/)
+      password: password
             .required(),
     }),
 }
 
 const registrationValidationSchema = {
   body: Joi.object({
-    username: Joi.string()
+    username: username
       .required(),
-    password: Joi.string()
-      .regex(/[a-zA-Z0-9]{8,30}/)
+    password: password
           .required(),
-    image: Joi.string().required()
+    image: image.required()
   }),
 }
 
 const userValidationSchema = {
     body: Joi.object({
-      password: Joi.string()
-        .regex(/[a-zA-Z0-9]{8,30}/)
+      password: password
             .optional(),
-      image: Joi.string().optional()
+      image: image.optional()
     }),
 }
 
