@@ -1,11 +1,12 @@
-Login - localhost:8000/api/auth/v3/login
-Register - localhost:8000/api/auth/v3/register
-// Protected Routes:
-Get User Profile - localhost:8000/api/auth/v3/profile
-Update Profile - localhost:8000/api/auth/v3/profile
-Current user Balance - localhost:8000/api/bank/v3/balance
-Current user Transactions - localhost:8000/api/bank/v3/transactions
-Current user deposit - localhost:8000/api/bank/v3/deposit
-Current user withdrawal - localhost:8000/api/bank/v3/withdrawal
-Current user transfer to username - localhost:8000/api/bank/v3/transfer/:targetUser
-Get users - localhost:8000/api/auth/v3/users
+| Title                       | Method | Endpoint                                                                  | Data required               | Notes                              |
+| --------------------------- | ------ | ------------------------------------------------------------------------- | --------------------------- | ---------------------------------- |
+| Get users                   | `GET`  | `https://coded-projects-api.herokuapp.com/api/auth/v3/users`              | `no data required`          | NA                                 |
+| Login                       | `POST` | `https://coded-projects-api.herokuapp.com/api/auth/v3/login`              | `username password image`   | NA                                 |
+| Register                    | `POST` | `https://coded-projects-api.herokuapp.com/api/auth/v3/register`           | `username password`         | NA                                 |
+| Get User Profile            | `GET`  | `https://coded-projects-api.herokuapp.com/api/auth/v3/profile`            | `no data required`          | NA                                 |
+| Update Profile              | `PUT`  | `https://coded-projects-api.herokuapp.com/api/auth/v3/profile`            | `password or image or both` | NA                                 |
+| Logged-in user Balance      | `GET`  | `https://coded-projects-api.herokuapp.com/api/bank/v3/balance`            | `no data required`          | NA                                 |
+| Logged-in user Transactions | `GET`  | `https://coded-projects-api.herokuapp.com/api/bank/v3/transactions`       | `no data required`          | NA                                 |
+| Deposit                     | `POST` | `https://coded-projects-api.herokuapp.com/api/bank/v3/deposit`            | `amount`                    | NA                                 |
+| Withdrawal                  | `POST` | `https://coded-projects-api.herokuapp.com/api/bank/v3/withdrawal`         | `amount`                    | NA                                 |
+| Transfer amount             | `POST` | `https://coded-projects-api.herokuapp.com/api/bank/v3/transfer/:username` | `amount`                    | `route param username is required` |
