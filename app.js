@@ -11,8 +11,8 @@ const passport = require("passport");
 const { localStrategy, jwtStrategy } = require("./middlewares/auth/passport");
 const notFoundHandler = require("./middlewares/errors/notFoundHandler");
 const errorHandler = require("./middlewares/errors/errorHandler");
-const authRoutes = require("./apis/auth/user.routes");
-const bankAccountRoutes = require("./apis/bankAccount/account.routes");
+const authRoutes = require("./apis/auth/v3/user.routes");
+const bankAccountRoutes = require("./apis/bankAccount/v3/account.routes");
 
 const app = express();
 

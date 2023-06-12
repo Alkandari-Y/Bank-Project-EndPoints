@@ -1,7 +1,7 @@
-const User = require("../../db/models/User");
-const Account = require("../../db/models/Account");
-const createPasswordHash = require("../../utils/auth/createPasswordHash");
-const createUserToken = require("../../utils/auth/createUserToken");
+const User = require("../../../db/models/User");
+const Account = require("../../../db/models/Account");
+const createPasswordHash = require("../../../utils/auth/createPasswordHash");
+const createUserToken = require("../../../utils/auth/createUserToken");
 
 exports.register = async (req, res, next) => {
   try {

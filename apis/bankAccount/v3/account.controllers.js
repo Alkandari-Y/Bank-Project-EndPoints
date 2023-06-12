@@ -1,6 +1,6 @@
-const User = require("../../db/models/User");
-const Account = require("../../db/models/Account");
-const Transaction = require("../../db/models/Transaction");
+const User = require("../../../db/models/User");
+const Account = require("../../../db/models/Account");
+const Transaction = require("../../../db/models/Transaction");
 
 exports.getAccountByUserName = async (username) => {
   try {
@@ -49,6 +49,7 @@ exports.depositAmount = async (req, res, next) => {
     });
 
     // Could update response
+    //     return res.status(200).json({ ...account._doc, transaction });
     return res.status(200).json({ account, transaction });
   } catch (err) {
     next(err);
@@ -79,7 +80,8 @@ exports.withdrawAmount = async (req, res, next) => {
     });
 
     // Could update response
-    return res.status(200).json({ updatedAccount, transaction });
+    //     return res.status(200).json({ ...updatedAccount._doc, transaction });
+    return res.status(200).json({ ...updatedAccount, transaction });
   } catch (err) {
     next(err);
   }

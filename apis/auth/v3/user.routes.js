@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const imageUpload = require("../../middlewares/uploads/imageUpload");
-const imageToBody = require("../../middlewares/uploads/imageToBody");
+const imageUpload = require("../../../middlewares/uploads/imageUpload");
+const imageToBody = require("../../../middlewares/uploads/imageToBody");
 const passport = require("passport");
 const { validate } = require("express-validation");
 const {
     loginValidationSchema,
     registrationValidationSchema,
   userValidationSchema,
-} = require("./auth.validators");
+} = require("../../../utils/valiators/auth.validators");
 const {
   register,
   login,
