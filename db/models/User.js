@@ -14,7 +14,7 @@ const UserSchema = Schema(
     password: {
       type: String,
       required: [true, "Please add a password"],
-      select: false
+      select: false,
     },
     account: {
       type: Schema.Types.ObjectId,

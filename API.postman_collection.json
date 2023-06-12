@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"testuser\"\r\n}",
+							"raw": "{\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -60,7 +60,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/ASUS/OneDrive/Pictures/meme/e68.jpg"
+									"src": "/C:/Users/yayal/OneDrive/Pictures/meme/e68.jpg"
 								}
 							]
 						},
@@ -93,7 +93,38 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWZkYzMzZjM0ZDhlMzFhNjc0MWIiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTE1MTE5NDczLCJpYXQiOjE2ODY1MTQ4MTl9.ePmAasFrOyMgy-i6blVYXBbtO0ohLQ-UQzsjsXaepI0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/auth/v3/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"v3",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
 									"type": "string"
 								}
 							]
@@ -124,7 +155,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MzM1OGI3NzVlMTEzYTgzZWRlYTEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTE2ODY4OTgyLCJpYXQiOjE2ODY1MTY1Njh9.r6ymhpDJS3qDQNJVz4App9TrPxAqg8PKwTDx-cF5-EE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NTk4MDMxLCJpYXQiOjE2ODY1NTQyOTh9.bPk9ZfHy0kkwN2hMiUw_13yrUDSneDwF0Et-ZeX1-Sc",
 									"type": "string"
 								}
 							]
@@ -136,13 +167,14 @@
 							"formdata": [
 								{
 									"key": "password",
-									"value": "localhost:8000/api/auth/v3/profile",
-									"type": "text"
+									"value": "testuser",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/ASUS/OneDrive/Pictures/meme/e68.jpg"
+									"src": "/C:/Users/yayal/OneDrive/Pictures/Portraits/bg-white.jpg"
 								}
 							]
 						},
@@ -175,7 +207,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
 									"type": "string"
 								}
 							]
@@ -206,7 +238,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU1NzMxOTk4LCJpYXQiOjE2ODY1NTU0Mzd9.UWMEiyZqkSjHMOW7ikMj227lgfd2UwHlRHBdolNJ2uI",
 									"type": "string"
 								}
 							]
@@ -237,7 +269,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NzY1MjI4LCJpYXQiOjE2ODY1NTQ0NjV9.EIBrgljTVsFo4rYPE5_nO-sOL368IfyjpspbThFDSo4",
 									"type": "string"
 								}
 							]
@@ -246,7 +278,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 100\r\n}",
+							"raw": "{\r\n    \"amount\": 400\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,7 +309,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NzY1MjI4LCJpYXQiOjE2ODY1NTQ0NjV9.EIBrgljTVsFo4rYPE5_nO-sOL368IfyjpspbThFDSo4",
 									"type": "string"
 								}
 							]
@@ -286,7 +318,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 100\r\n}",
+							"raw": "{\r\n    \"amount\": 6\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -294,7 +326,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/api/bank/v3/deposit",
+							"raw": "localhost:8000/api/bank/v3/transfer/testuser23",
 							"host": [
 								"localhost"
 							],
@@ -303,7 +335,8 @@
 								"api",
 								"bank",
 								"v3",
-								"deposit"
+								"transfer",
+								"testuser23"
 							]
 						}
 					},
@@ -317,7 +350,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzNjUyODMwLCJpYXQiOjE2ODY1MjMzNTJ9.6-k5tplnA-rnqrFbsXOOtaA2q2eN8fkz7mEsnhZ9cbo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2YzZiOTQwYzYxYWY2ZmEwY2NhNDAiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTU0NzY1MjI4LCJpYXQiOjE2ODY1NTQ0NjV9.EIBrgljTVsFo4rYPE5_nO-sOL368IfyjpspbThFDSo4",
 									"type": "string"
 								}
 							]
@@ -326,7 +359,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 20\r\n}",
+							"raw": "{\r\n    \"amount\": 50\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

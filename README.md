@@ -8,3 +8,4 @@ Current user Transactions - localhost:8000/api/bank/v3/transactions
 Current user deposit - localhost:8000/api/bank/v3/deposit
 Current user withdrawal - localhost:8000/api/bank/v3/withdrawal
 Current user transfer to username - localhost:8000/api/bank/v3/transfer/:targetUser
+Get users - localhost:8000/api/auth/v3/users

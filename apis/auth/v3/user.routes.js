@@ -26,6 +26,12 @@ router.get(
   authControllers.getLoggedInUserProfile
 );
 
+router.get(
+  "/users",
+  passport.authenticate("jwt", { session: false }),
+  authControllers.getUsers
+);
+
 router.put(
   "/profile",
   passport.authenticate("jwt", { session: false }),

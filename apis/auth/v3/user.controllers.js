@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
     const user = User(req.body);
     const account = await Account.create({ owner: user._id });
     user.account = account._id;
-    await user.save()
+    await user.save();
     const token = createUserToken(user);
     return res.status(201).json({ access: token });
   } catch (err) {
@@ -41,6 +41,18 @@ exports.updateUserProfile = async (req, res, next) => {
       new: true,
     });
     return res.status(200).json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    if (req.body.password) {
+      req.body.password = await createPasswordHash(req.body.password);
+    }
+    const users = await User.find().select("username account image");
+    return res.status(200).json(users);
   } catch (err) {
     next(err);
   }
