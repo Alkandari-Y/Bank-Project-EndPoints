@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
-const { validate } = require("express-validation");
+const validationWrapper = require("../../../middlewares/wrappers/validationWrapper");
 const {
   amountValidationSchema,
 } = require("../../../utils/validators/account.validators");
@@ -47,11 +47,7 @@ router.get(
 router.post(
   "/deposit",
   passport.authenticate("jwt", { session: false }),
-  validate(
-    amountValidationSchema,
-    { context: false, statusCode: 400, keyByField: true },
-    { abortEarly: true }
-  ),
+  validationWrapper(amountValidationSchema),
   populateUserAccount,
   depositAmount
 );
@@ -59,22 +55,14 @@ router.post(
 router.post(
   "/withdraw",
   passport.authenticate("jwt", { session: false }),
-  validate(
-    amountValidationSchema,
-    { context: false, statusCode: 400, keyByField: true },
-    { abortEarly: true }
-  ),
+  validationWrapper(amountValidationSchema),
   populateUserAccount,
   withdrawAmount
 );
 router.post(
   "/transfer/:username",
   passport.authenticate("jwt", { session: false }),
-  validate(
-    amountValidationSchema,
-    { context: false, statusCode: 400, keyByField: true },
-    { abortEarly: true }
-  ),
+  validationWrapper(amountValidationSchema),
   populateUserAccount,
   transferAmount
 );

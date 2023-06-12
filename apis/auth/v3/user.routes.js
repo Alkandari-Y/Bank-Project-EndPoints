@@ -1,27 +1,23 @@
 const router = require("express").Router();
 const imageUpload = require("../../../middlewares/uploads/imageUpload");
 const imageToBody = require("../../../middlewares/uploads/imageToBody");
+const validationWrapper = require("../../../middlewares/wrappers/validationWrapper");
 const passport = require("passport");
-const { validate } = require("express-validation");
 const {
-    loginValidationSchema,
-    registrationValidationSchema,
+  loginValidationSchema,
+  registrationValidationSchema,
   userValidationSchema,
 } = require("../../../utils/validators/auth.validators");
 const {
   register,
   login,
-    getLoggedInUserProfile,
-    updateUserProfile
+  getLoggedInUserProfile,
+  updateUserProfile,
 } = require("./user.controllers");
 
 router.post(
   "/login",
-  validate(
-    loginValidationSchema,
-    { context: false, statusCode: 400, keyByField: true },
-    { abortEarly: true }
-  ),
+  validationWrapper(loginValidationSchema),
   passport.authenticate("local", { session: false }),
   login
 );
@@ -29,11 +25,7 @@ router.post(
   "/register",
   imageUpload.single("image"),
   imageToBody,
-  validate(
-    registrationValidationSchema,
-    { context: false, statusCode: 400, keyByField: true },
-    { abortEarly: true }
-  ),
+  validationWrapper(registrationValidationSchema),
   register
 );
 
@@ -48,11 +40,7 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   imageUpload.single("image"),
   imageToBody,
-  validate(
-    userValidationSchema,
-    { context: false, statusCode: 400, keyByField: true },
-    { abortEarly: true }
-  ),
+  validationWrapper(userValidationSchema),
   updateUserProfile
 );
 

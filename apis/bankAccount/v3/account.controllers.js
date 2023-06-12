@@ -48,7 +48,7 @@ exports.depositAmount = async (req, res, next) => {
     });
 
     // Could update response
-    //     return res.status(200).json({ ...account._doc, transaction });
+    // return res.status(200).json({ ...account._doc, transaction });
     return res.status(200).json({ account, transaction });
   } catch (err) {
     next(err);
@@ -79,7 +79,7 @@ exports.withdrawAmount = async (req, res, next) => {
     });
 
     // Could update response
-    //     return res.status(200).json({ ...updatedAccount._doc, transaction });
+    // return res.status(200).json({ ...updatedAccount._doc, transaction });
     return res.status(200).json({ updatedAccount, transaction });
   } catch (err) {
     next(err);
@@ -110,10 +110,8 @@ exports.transferAmount = async (req, res, next) => {
       $inc: { amount: req.body.amount * -1 },
     });
 
-    await req.receivingAccount.updateOne(
-      { $inc: { amount: req.body.amount } },
-    );
-    
+    await req.receivingAccount.updateOne({ $inc: { amount: req.body.amount } });
+
     const transaction = await Transaction.create({
       senderId: req.user.account._id,
       type: "transfer",
