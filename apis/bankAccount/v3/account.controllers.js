@@ -38,7 +38,7 @@ exports.depositAmount = async (req, res, next) => {
   try {
     const account = await Account.findOneAndUpdate(
       { owner: req.user._id },
-      { $inc: { amount: req.body.amount } },
+      { $inc: { balance: req.body.amount } },
       { runValidators: true, new: true }
     );
     const transaction = await Transaction.create({
@@ -48,8 +48,7 @@ exports.depositAmount = async (req, res, next) => {
     });
 
     // Could update response
-    // return res.status(200).json({ ...account._doc, transaction });
-    return res.status(200).json({ account, transaction });
+    return res.status(200).json({ ...account._doc, transaction });
   } catch (err) {
     next(err);
   }
@@ -69,7 +68,7 @@ exports.withdrawAmount = async (req, res, next) => {
 
     const updatedAccount = await Account.findOneAndUpdate(
       { owner: req.user._id },
-      { $inc: { amount: req.body.amount * -1 } },
+      { $inc: { balance: req.body.amount * -1 } },
       { runValidators: true, new: true }
     );
     const transaction = await Transaction.create({
@@ -78,9 +77,8 @@ exports.withdrawAmount = async (req, res, next) => {
       type: "withdraw",
     });
 
-    // Could update response
-    // return res.status(200).json({ ...updatedAccount._doc, transaction });
-    return res.status(200).json({ updatedAccount, transaction });
+    return res.status(200).json({ ...updatedAccount._doc, transaction });
+    // return res.status(200).json({ updatedAccount, transaction });
   } catch (err) {
     next(err);
   }
@@ -98,7 +96,7 @@ exports.transferAmount = async (req, res, next) => {
       });
     }
 
-    if (req.user.account.amount - req.body.amount < 0) {
+    if (req.user.account.balance - req.body.amount < 0) {
       return next({
         status: 400,
         name: "Validation Error",
@@ -107,10 +105,12 @@ exports.transferAmount = async (req, res, next) => {
     }
 
     await req.user.account.updateOne({
-      $inc: { amount: req.body.amount * -1 },
+      $inc: { balance: req.body.amount * -1 },
     });
 
-    await req.receivingAccount.updateOne({ $inc: { amount: req.body.amount } });
+    await req.receivingAccount.updateOne({
+      $inc: { balance: req.body.amount },
+    });
 
     const transaction = await Transaction.create({
       senderId: req.user.account._id,

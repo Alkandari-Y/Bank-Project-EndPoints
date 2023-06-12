@@ -7,7 +7,7 @@ const AccountSchema = Schema(
       required: true,
       ref: "User",
     },
-    amount: {
+    balance: {
       type: Number,
       default: 0,
       min: [0, "Account balance cannot be below 0"],
