@@ -36,7 +36,11 @@ exports.jwtStrategy = new JWTStrategy(
     secretOrKey: JWT_SECRET,
   },
   async (jwtPayload, done) => {
-    if (Date.now() > jwtPayload.exp) {
+    const now = Date.now();
+    const exp = jwtPayload.exp;
+    console.log(now);
+    console.log(exp);
+    if (now > exp) {
       return done({
         status: 401,
         name: "Authentication Error",
