@@ -1,23 +1,13 @@
 const router = require("express").Router();
 const passport = require("passport");
 const validationWrapper = require("../../../middlewares/wrappers/validationWrapper");
-const {
-  amountValidationSchema,
-} = require("../../../utils/validators/account.validators");
+const accountSchemas = require("../../../utils/validators/account.validators");
 const populateUserAccount = require("../../../middlewares/banks/populateUserAccount");
-
-const {
-  getAccountByUserName,
-  getUserAccount,
-  getUserTransactions,
-  depositAmount,
-  withdrawAmount,
-  transferAmount,
-} = require("./account.controllers");
+const accountControllers = require("./account.controllers");
 
 router.param("username", async (req, res, next, username) => {
   try {
-    const foundUser = await getAccountByUserName(username);
+    const foundUser = await accountControllers.getAccountByUserName(username);
     if (!foundUser)
       return next({
         status: 404,
@@ -35,36 +25,36 @@ router.get(
   "/balance",
   passport.authenticate("jwt", { session: false }),
   populateUserAccount,
-  getUserAccount
+  accountControllers.getUserAccount
 );
 
 router.get(
   "/transactions",
   passport.authenticate("jwt", { session: false }),
-  getUserTransactions
+  accountControllers.getUserTransactions
 );
 
 router.post(
   "/deposit",
   passport.authenticate("jwt", { session: false }),
-  validationWrapper(amountValidationSchema),
+  validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
-  depositAmount
+  accountControllers.depositAmount
 );
 
 router.post(
   "/withdraw",
   passport.authenticate("jwt", { session: false }),
-  validationWrapper(amountValidationSchema),
+  validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
-  withdrawAmount
+  accountControllers.withdrawAmount
 );
 router.post(
   "/transfer/:username",
   passport.authenticate("jwt", { session: false }),
-  validationWrapper(amountValidationSchema),
+  validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
-  transferAmount
+  accountControllers.transferAmount
 );
 
 module.exports = router;

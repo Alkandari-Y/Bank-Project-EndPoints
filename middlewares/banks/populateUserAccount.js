@@ -3,7 +3,6 @@ module.exports = async (req, res, next) => {
     req.user = await req.user.populate("account");
     next();
   } catch (err) {
-    console.log("error in md");
     next(err);
   }
 };

@@ -3,36 +3,27 @@ const imageUpload = require("../../../middlewares/uploads/imageUpload");
 const imageToBody = require("../../../middlewares/uploads/imageToBody");
 const validationWrapper = require("../../../middlewares/wrappers/validationWrapper");
 const passport = require("passport");
-const {
-  loginValidationSchema,
-  registrationValidationSchema,
-  userValidationSchema,
-} = require("../../../utils/validators/auth.validators");
-const {
-  register,
-  login,
-  getLoggedInUserProfile,
-  updateUserProfile,
-} = require("./user.controllers");
+const authSchemas = require("../../../utils/validators/auth.validators");
+const authControllers = require("./user.controllers");
 
 router.post(
   "/login",
-  validationWrapper(loginValidationSchema),
+  validationWrapper(authSchemas.loginValidationSchema),
   passport.authenticate("local", { session: false }),
-  login
+  authControllers.login
 );
 router.post(
   "/register",
   imageUpload.single("image"),
   imageToBody,
-  validationWrapper(registrationValidationSchema),
-  register
+  validationWrapper(authSchemas.registrationValidationSchema),
+  authControllers.register
 );
 
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
-  getLoggedInUserProfile
+  authControllers.getLoggedInUserProfile
 );
 
 router.put(
@@ -40,8 +31,8 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   imageUpload.single("image"),
   imageToBody,
-  validationWrapper(userValidationSchema),
-  updateUserProfile
+  validationWrapper(authSchemas.userValidationSchema),
+  authControllers.updateUserProfile
 );
 
 module.exports = router;

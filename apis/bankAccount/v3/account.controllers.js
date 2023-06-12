@@ -47,7 +47,6 @@ exports.depositAmount = async (req, res, next) => {
       type: "deposit",
     });
 
-    // Could update response
     return res.status(200).json({ ...account._doc, transaction });
   } catch (err) {
     next(err);
@@ -78,7 +77,6 @@ exports.withdrawAmount = async (req, res, next) => {
     });
 
     return res.status(200).json({ ...updatedAccount._doc, transaction });
-    // return res.status(200).json({ updatedAccount, transaction });
   } catch (err) {
     next(err);
   }
