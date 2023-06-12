@@ -7,8 +7,9 @@ module.exports = (user) => {
   const payload = {
     _id: user._id,
     username: user.username,
-    exp: JWT_EXP,
   };
-  const token = jwt.sign(payload, process.env.JWT_SECRET);
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXP,
+  });
   return token;
 };
