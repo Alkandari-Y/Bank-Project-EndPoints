@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "d4c69098-93f4-42b8-a305-65ddcef814bc",
+		"name": "API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13380578"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"testuser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/v3/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"v3",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "testuser",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "testuser",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ASUS/OneDrive/Pictures/meme/e68.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/v3/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"v3",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Get User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWZkYzMzZjM0ZDhlMzFhNjc0MWIiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTE1MTE5NDczLCJpYXQiOjE2ODY1MTQ4MTl9.ePmAasFrOyMgy-i6blVYXBbtO0ohLQ-UQzsjsXaepI0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/auth/v3/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"v3",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MzM1OGI3NzVlMTEzYTgzZWRlYTEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTE2ODY4OTgyLCJpYXQiOjE2ODY1MTY1Njh9.r6ymhpDJS3qDQNJVz4App9TrPxAqg8PKwTDx-cF5-EE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "localhost:8000/api/auth/v3/profile",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ASUS/OneDrive/Pictures/meme/e68.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/v3/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"v3",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bank Account",
+			"item": [
+				{
+					"name": "Get Account Balance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/bank/v3/balance",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bank",
+								"v3",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/bank/v3/transactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bank",
+								"v3",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/bank/v3/deposit",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bank",
+								"v3",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzMzM5ODExLCJpYXQiOjE2ODY1MjMwMzl9.PNgwwqc09FCaTeavs9hl3YR6YMMc9dtN_u68W1kofiM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/bank/v3/deposit",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bank",
+								"v3",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2Mzk4ZTA2MWQzYmFjZGFjNmM1MWEiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNjg2NTIzNjUyODMwLCJpYXQiOjE2ODY1MjMzNTJ9.6-k5tplnA-rnqrFbsXOOtaA2q2eN8fkz7mEsnhZ9cbo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/bank/v3/withdraw",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bank",
+								"v3",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
