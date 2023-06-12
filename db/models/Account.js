@@ -10,7 +10,7 @@ const AccountSchema = Schema(
     amount: {
       type: Number,
       default: 0,
-      min: [0, "Account balance cannot be negative"],
+      min: [0, "Account balance cannot be below 0"],
     },
   },
   { timestamps: true }

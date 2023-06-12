@@ -2,8 +2,12 @@ const { Schema, model } = require("mongoose");
 
 const TransactionSchema = Schema(
   {
-    account: { type: Schema.Types.ObjectId},
-    amount: { type: Number, required: true },
+    account: { type: Schema.Types.ObjectId },
+    amount: {
+      type: Number,
+      required: [true, "Please add an amount to transfer"],
+      min: [0, "Account balance cannot be negative"],
+    },
     type: {
       type: String,
       enum: {

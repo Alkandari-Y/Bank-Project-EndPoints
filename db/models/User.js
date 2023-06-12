@@ -4,17 +4,16 @@ const UserSchema = Schema(
   {
     username: {
       type: String,
-      unique: true,
-      required: true,
+      unique: [true, "This username already exists"],
+      required: [true, "Please provide a username"],
     },
     image: {
       type: String,
-      unique: true,
-      required: true,
+      required: [true, "Please provide an image for picture ID"],
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Please add a password"],
       select: false
     },
     account: {
