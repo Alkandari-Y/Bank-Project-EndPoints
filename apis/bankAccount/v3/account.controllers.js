@@ -13,8 +13,7 @@ exports.getAccountByUserName = async (username) => {
 
 exports.getUserAccount = async (req, res, next) => {
   try {
-    const foundAccount = await Account.findOne({ owner: req.user._id });
-    return res.status(200).json(foundAccount);
+    return res.status(200).json(req.user.account);
   } catch (err) {
     next(err);
   }
@@ -81,48 +80,45 @@ exports.withdrawAmount = async (req, res, next) => {
 
     // Could update response
     //     return res.status(200).json({ ...updatedAccount._doc, transaction });
-    return res.status(200).json({ ...updatedAccount, transaction });
+    return res.status(200).json({ updatedAccount, transaction });
   } catch (err) {
     next(err);
   }
 };
 
+// @param req.receivingAccount is an account instance for the
+// @param username url param
 exports.transferAmount = async (req, res, next) => {
   try {
-    if (req.user.account.equals(req.receiver._id)) {
+    if (req.user.account.equals(req.receivingAccount)) {
       return next({
         status: 400,
         name: "Validation Error",
-        message:
-          "Cannot transfer to the same account. Use Deposit.",
+        message: "Cannot transfer to the same account. Use Deposit.",
       });
-      }
-      const senderAccount = await Account.findOne({ owner: req.user._id });
+    }
 
-      if (senderAccount.amount - req.body.amount < 0) {
-        return next({
-          status: 400,
-          name: "Validation Error",
-          message: "Account Balance cannot be less than zero",
-        });
-      }
-  
-      await Account.findOneAndUpdate(
-        { owner: req.user._id },
-        { $inc: { amount: req.body.amount * -1 } },
-        { runValidators: true, new: true }
-      );
-      
-    const receiverAccount = await Account.findByIdAndUpdate(
-      req.receiver._id,
+    if (req.user.account.amount - req.body.amount < 0) {
+      return next({
+        status: 400,
+        name: "Validation Error",
+        message: "Account Balance cannot be less than zero",
+      });
+    }
+
+    await req.user.account.updateOne({
+      $inc: { amount: req.body.amount * -1 },
+    });
+
+    await req.receivingAccount.updateOne(
       { $inc: { amount: req.body.amount } },
-        { runValidators: true, new: true }
     );
+    
     const transaction = await Transaction.create({
-      senderId: senderAccount._id,
+      senderId: req.user.account._id,
       type: "transfer",
       amount: req.body.amount,
-      receiverId: receiverAccount._id,
+      receiverId: req.receivingAccount._id,
     });
     return res.status(200).json({ transaction });
   } catch (err) {

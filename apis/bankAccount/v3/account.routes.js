@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const passport = require("passport");
 const { validate } = require("express-validation");
-const { amountValidationSchema } = require("../../../utils/validators/account.validators");
+const {
+  amountValidationSchema,
+} = require("../../../utils/validators/account.validators");
+const populateUserAccount = require("../../../middlewares/banks/populateUserAccount");
+
 const {
   getAccountByUserName,
   getUserAccount,
@@ -20,7 +24,7 @@ router.param("username", async (req, res, next, username) => {
         name: "Not Found",
         message: "Account not found!",
       });
-    req.receiver = foundUser.account;
+    req.receivingAccount = foundUser.account;
     next();
   } catch (err) {
     next(err);
@@ -30,8 +34,10 @@ router.param("username", async (req, res, next, username) => {
 router.get(
   "/balance",
   passport.authenticate("jwt", { session: false }),
+  populateUserAccount,
   getUserAccount
 );
+
 router.get(
   "/transactions",
   passport.authenticate("jwt", { session: false }),
@@ -46,6 +52,7 @@ router.post(
     { context: false, statusCode: 400, keyByField: true },
     { abortEarly: true }
   ),
+  populateUserAccount,
   depositAmount
 );
 
@@ -57,6 +64,7 @@ router.post(
     { context: false, statusCode: 400, keyByField: true },
     { abortEarly: true }
   ),
+  populateUserAccount,
   withdrawAmount
 );
 router.post(
@@ -67,6 +75,7 @@ router.post(
     { context: false, statusCode: 400, keyByField: true },
     { abortEarly: true }
   ),
+  populateUserAccount,
   transferAmount
 );
 
