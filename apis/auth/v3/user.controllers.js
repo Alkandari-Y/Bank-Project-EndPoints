@@ -48,9 +48,6 @@ exports.updateUserProfile = async (req, res, next) => {
 
 exports.getUsers = async (req, res, next) => {
   try {
-    if (req.body.password) {
-      req.body.password = await createPasswordHash(req.body.password);
-    }
     const users = await User.find().select("username account image");
     return res.status(200).json(users);
   } catch (err) {
