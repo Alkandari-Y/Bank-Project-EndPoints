@@ -5,6 +5,12 @@ const Account = require("../../../models/Account");
 const Transaction = require("../../../models/Transaction");
 const asyncWrapper = require("../../../utils/wrappers/asyncWrapper");
 
+/*
+@param req.body.amount will need to be converted to type number to avoid errors
+due to use of multer parsing form data and bodyParser for urlEncoding
+*/
+
+
 exports.getAccountByUserName = async (username) => {
   try {
     const foundUser = await User.findOne({ username }).populate("account");

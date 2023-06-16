@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const multer = require("multer")
-const passportAuthenticator = require("../../../middlewares/auth/passportAuth")
+const multer = require("multer");
+const passportAuthenticator = require("../../../middlewares/auth/passportAuth");
 const validationWrapper = require("../../../utils/wrappers/validationWrapper");
 const accountSchemas = require("../../../utils/validators/account.validators");
 const populateUserAccount = require("../../../middlewares/banks/populateUserAccount");
 const accountControllers = require("./account.controllers");
 
-router.use(multer().none())
+router.use(multer().none());
 
 router.param("username", async (req, res, next, username) => {
   try {
