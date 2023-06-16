@@ -4,7 +4,7 @@ const asyncWrapper = require("../../../utils/wrappers/asyncWrapper");
 const createPasswordHash = require("../../../utils/auth/createPasswordHash");
 const createUserToken = require("../../../utils/auth/createUserToken");
 
-exports.register = asyncWrapper(async (req, res, next) => {
+exports.register = asyncWrapper(async (req, res) => {
   req.body.password = await createPasswordHash(req.body.password);
   const user = await User.create(req.body);
   const token = createUserToken(user);
@@ -16,13 +16,13 @@ exports.login = asyncWrapper(async (req, res) => {
   return res.status(StatusCodes.OK).json(token);
 });
 
-exports.refreshJWTTokens = asyncWrapper(async (req, res, next) => {
+exports.refreshJWTTokens = asyncWrapper(async (req, res) => {
   const token = createUserToken(req.user);
   return res.status(StatusCodes.OK).json(token);
 });
 
 exports.getLoggedInUserProfile = async (req, res) => {
-  console.log(req.user)
+  console.log(req.user);
   return res.status(StatusCodes.OK).json(req.user);
 };
 

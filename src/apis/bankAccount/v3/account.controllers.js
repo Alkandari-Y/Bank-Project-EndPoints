@@ -10,7 +10,6 @@ const asyncWrapper = require("../../../utils/wrappers/asyncWrapper");
 due to use of multer parsing form data and bodyParser for urlEncoding
 */
 
-
 exports.getAccountByUserName = async (username) => {
   try {
     const foundUser = await User.findOne({ username }).populate("account");
@@ -177,10 +176,7 @@ exports.transferAmount = asyncWrapper(async (req, res, next) => {
   }
 });
 
-exports.getUsersAndAccounts = asyncWrapper(async (req, res, next) => {
-  if (req.body.password) {
-    req.body.password = await createPasswordHash(req.body.password);
-  }
+exports.getUsersAndAccounts = asyncWrapper(async (req, res) => {
   const users = await User.find().select("username account image");
   return res.status(StatusCodes.OK).json(users);
 });
