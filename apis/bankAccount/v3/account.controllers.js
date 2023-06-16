@@ -1,6 +1,9 @@
-const User = require("../../../db/models/User");
-const Account = require("../../../db/models/Account");
-const Transaction = require("../../../db/models/Transaction");
+const { startSession } = require("mongoose");
+const { StatusCodes } = require("http-status-codes");
+const User = require("../../../models/User");
+const Account = require("../../../models/Account");
+const Transaction = require("../../../models/Transaction");
+const asyncWrapper = require("../../../utils/wrappers/asyncWrapper");
 
 exports.getAccountByUserName = async (username) => {
   try {
@@ -11,113 +14,167 @@ exports.getAccountByUserName = async (username) => {
   }
 };
 
-exports.getUserAccount = async (req, res, next) => {
-  try {
-    return res.status(200).json(req.user.account);
-  } catch (err) {
-    next(err);
-  }
+exports.createBankAccount = asyncWrapper(async (req, res, next) => {
+  if (req.user.account)
+    return next({
+      status: StatusCodes.BAD_REQUEST,
+      message: "You already have an account",
+    });
+  const account = await Account.create({
+    owner: req.user._id,
+    balance: +req.body.amount || 0,
+  });
+  req.user.account = account._id;
+  await req.user.save();
+  return res.status(StatusCodes.OK).json(account);
+});
+
+exports.getUserAccount = asyncWrapper(async (req, res) => {
+  return res.status(StatusCodes.CREATED).json(req.user.account);
+});
+
+exports.getUserTransactions = async (req, res) => {
+  const userTransactions = await Transaction.find({
+    $or: [
+      { account: req.user.account },
+      { senderId: req.user.account },
+      { receiverId: req.user.account },
+    ],
+  }).sort("field -createdAt");
+  return res.status(StatusCodes.OK).json(userTransactions);
 };
 
-exports.getUserTransactions = async (req, res, next) => {
+exports.depositAmount = asyncWrapper(async (req, res, next) => {
+  const session = await startSession();
   try {
-    const userTransactions = await Transaction.find({
-      $or: [
-        { account: req.user.account },
-        { senderId: req.user.account },
-        { receiverId: req.user.account },
-      ],
-    }).sort("field -createdAt");
-    return res.status(200).json(userTransactions);
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.depositAmount = async (req, res, next) => {
-  try {
+    session.startTransaction();
     const account = await Account.findOneAndUpdate(
       { owner: req.user._id },
-      { $inc: { balance: req.body.amount } },
-      { runValidators: true, new: true }
+      { $inc: { balance: +req.body.amount } },
+      { session, runValidators: true, new: true }
     );
-    const transaction = await Transaction.create({
-      amount: req.body.amount,
-      account: account._id,
-      type: "deposit",
-    });
-
-    return res.status(200).json({ ...account._doc, transaction });
-  } catch (err) {
-    next(err);
+    const transaction = await Transaction.create(
+      [
+        {
+          amount: +req.body.amount,
+          account: account._id,
+          type: "deposit",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    session.endSession();
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ ...account._doc, transaction });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    return next(error);
   }
-};
+});
 
-exports.withdrawAmount = async (req, res, next) => {
+exports.withdrawAmount = asyncWrapper(async (req, res, next) => {
+  if (req.user.account.balance - +req.body.amount < 0) {
+    return next({
+      status: 400,
+      name: "Validation Error",
+      message: "Account Balance cannot be less than zero",
+    });
+  }
+  const session = await startSession();
   try {
-    const account = await Account.findOne({ owner: req.user._id });
-
-    if (account.amount - req.body.amount < 0) {
-      return next({
-        status: 400,
-        name: "Validation Error",
-        message: "Account Balance cannot be less than zero",
-      });
-    }
-
+    session.startTransaction();
     const updatedAccount = await Account.findOneAndUpdate(
       { owner: req.user._id },
       { $inc: { balance: req.body.amount * -1 } },
-      { runValidators: true, new: true }
+      { session, runValidators: true, new: true }
     );
-    const transaction = await Transaction.create({
-      amount: req.body.amount,
-      account: account._id,
-      type: "withdraw",
-    });
-
-    return res.status(200).json({ ...updatedAccount._doc, transaction });
-  } catch (err) {
-    next(err);
+    const transaction = await Transaction.create(
+      [
+        {
+          amount: req.body.amount,
+          account: req.user.account._id,
+          type: "withdraw",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    session.endSession();
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ ...updatedAccount._doc, transaction });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    next(error);
   }
-};
+});
 
 // @param req.receivingAccount is an account instance for the
 // @param username url param
-exports.transferAmount = async (req, res, next) => {
-  try {
-    if (req.user.account.equals(req.receivingAccount)) {
-      return next({
-        status: 400,
-        name: "Validation Error",
-        message: "Cannot transfer to the same account. Use Deposit.",
-      });
-    }
-
-    if (req.user.account.balance - req.body.amount < 0) {
-      return next({
-        status: 400,
-        name: "Validation Error",
-        message: "Account Balance cannot be less than zero",
-      });
-    }
-
-    await req.user.account.updateOne({
-      $inc: { balance: req.body.amount * -1 },
+exports.transferAmount = asyncWrapper(async (req, res, next) => {
+  if (req.user.account.equals(req.receivingAccount)) {
+    return next({
+      status: StatusCodes.BAD_REQUEST,
+      name: "Validation Error",
+      message: "Cannot transfer to the same account. Use Deposit.",
     });
-
-    await req.receivingAccount.updateOne({
-      $inc: { balance: req.body.amount },
-    });
-
-    const transaction = await Transaction.create({
-      senderId: req.user.account._id,
-      type: "transfer",
-      amount: req.body.amount,
-      receiverId: req.receivingAccount._id,
-    });
-    return res.status(200).json({ transaction });
-  } catch (err) {
-    next(err);
   }
-};
+
+  if (req.user.account.balance - +req.body.amount < 0) {
+    return next({
+      status: StatusCodes.BAD_REQUEST,
+      name: "Validation Error",
+      message: "Account Balance cannot be less than zero",
+    });
+  }
+
+  const session = await startSession();
+  try {
+    session.startTransaction();
+    await req.user.account.updateOne(
+      {
+        $inc: { balance: +req.body.amount * -1 },
+      },
+      { session }
+    );
+
+    await req.receivingAccount.updateOne(
+      {
+        $inc: { balance: +req.body.amount },
+      },
+      { session }
+    );
+
+    const transaction = await Transaction.create(
+      [
+        {
+          senderId: req.user.account._id,
+          type: "transfer",
+          amount: +req.body.amount,
+          receiverId: req.receivingAccount._id,
+        },
+      ],
+      { session }
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+    return res.status(StatusCodes.CREATED).json({ transaction });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    return next(error);
+  }
+});
+
+exports.getUsersAndAccounts = asyncWrapper(async (req, res, next) => {
+  if (req.body.password) {
+    req.body.password = await createPasswordHash(req.body.password);
+  }
+  const users = await User.find().select("username account image");
+  return res.status(StatusCodes.OK).json(users);
+});

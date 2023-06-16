@@ -1,59 +1,43 @@
-const User = require("../../../db/models/User");
-const Account = require("../../../db/models/Account");
+const { StatusCodes } = require("http-status-codes");
+const User = require("../../../models/User");
+const asyncWrapper = require("../../../utils/wrappers/asyncWrapper");
 const createPasswordHash = require("../../../utils/auth/createPasswordHash");
 const createUserToken = require("../../../utils/auth/createUserToken");
 
-exports.register = async (req, res, next) => {
-  try {
+exports.register = asyncWrapper(async (req, res, next) => {
+  req.body.password = await createPasswordHash(req.body.password);
+  const user = await User.create(req.body);
+  const token = createUserToken(user);
+  return res.status(StatusCodes.createUserToken).json(token);
+});
+
+exports.login = asyncWrapper(async (req, res) => {
+  const token = createUserToken(req.user);
+  return res.status(StatusCodes.createUserToken).json(token);
+});
+
+exports.refreshJWTTokens = asyncWrapper(async (req, res, next) => {
+  const token = createUserToken(req.user);
+  return res.status(StatusCodes.createUserToken).json(token);
+});
+
+exports.getLoggedInUserProfile = async (req, res) => {
+  console.log(req.user)
+  return res.status(StatusCodes.OK).json(req.user);
+};
+
+exports.updateUserProfile = asyncWrapper(async (req, res) => {
+  if (req.body.password) {
     req.body.password = await createPasswordHash(req.body.password);
-
-    const user = User(req.body);
-    const account = await Account.create({ owner: user._id });
-    user.account = account._id;
-    await user.save();
-    const token = createUserToken(user);
-    return res.status(201).json({ access: token });
-  } catch (err) {
-    return next(err);
   }
-};
+  const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
+    runValidators: true,
+    new: true,
+  });
+  return res.status(StatusCodes.OK).json(updatedUser);
+});
 
-exports.login = async (req, res, next) => {
-  try {
-    const token = createUserToken(req.user);
-    return res.status(201).json({ access: token });
-  } catch (err) {
-    return next(err);
-  }
-};
-
-exports.getLoggedInUserProfile = async (req, res, next) => {
-  return res.status(200).json(req.user);
-};
-
-exports.updateUserProfile = async (req, res, next) => {
-  try {
-    if (req.body.password) {
-      req.body.password = await createPasswordHash(req.body.password);
-    }
-    const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
-      runValidators: true,
-      new: true,
-    });
-    return res.status(200).json(updatedUser);
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.getUsers = async (req, res, next) => {
-  try {
-    if (req.body.password) {
-      req.body.password = await createPasswordHash(req.body.password);
-    }
-    const users = await User.find().select("username account image");
-    return res.status(200).json(users);
-  } catch (err) {
-    next(err);
-  }
-};
+exports.getUsers = asyncWrapper(async (req, res) => {
+  const users = await User.find();
+  return res.status(StatusCodes.OK).json(users);
+});

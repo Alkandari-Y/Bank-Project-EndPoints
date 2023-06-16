@@ -1,0 +1,4 @@
+create custom errors 
+create custom errors
+handle mongo db errors
+

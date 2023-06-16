@@ -1,14 +1,20 @@
 require("dotenv").config();
-require("./config/connectDb")();
+require("./config/db/connectDb")();
 const PORT = process.env.PORT || 8000;
 
 const path = require("path");
 const express = require("express");
-const cors = require("cors");
 const morgan = require("morgan");
 const passport = require("passport");
+const bodyParser = require("body-parser");
+const rateLimiter = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const cors = require("cors");
+const mongoSanitize = require("express-mongo-sanitize");
 
-const { localStrategy, jwtStrategy } = require("./middlewares/auth/passport");
+const rateLimiterConfig = require("./config/app/rateLimiterConfig")
+const { localStrategy, jwtStrategy } = require("./config/auth/passport");
 const notFoundHandler = require("./middlewares/errors/notFoundHandler");
 const errorHandler = require("./middlewares/errors/errorHandler");
 const authRoutes = require("./apis/auth/v3/user.routes");
@@ -16,11 +22,15 @@ const bankAccountRoutes = require("./apis/bankAccount/v3/account.routes");
 
 const app = express();
 
+app.use(rateLimiter(rateLimiterConfig));
+app.use(helmet());
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/media/", express.static(path.join(__dirname, "media")));
+app.use(xss());
+app.use(mongoSanitize());
 app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use("/media/", express.static(path.join(__dirname, "media")));
 
 app.use(passport.initialize());
 passport.use(localStrategy);

@@ -19,6 +19,7 @@ const UserSchema = Schema(
     account: {
       type: Schema.Types.ObjectId,
       ref: "Account",
+      select: false,
     },
   },
   { timestamps: true }

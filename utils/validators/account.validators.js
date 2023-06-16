@@ -1,11 +1,17 @@
 const { Joi } = require("express-validation");
 
-const amount = Joi.number().min(1)
+const amount = Joi.number()
 
 const amountValidationSchema = {
   body: Joi.object({
-    amount: amount.required(),
+    amount: amount.min(1).required(),
   }),
 };
 
-module.exports = {amountValidationSchema};
+const createAccountValidationSchema = {
+  body: Joi.object({
+    amount: amount.min(0).optional(),
+  }),
+};
+
+module.exports = {amountValidationSchema, createAccountValidationSchema};
