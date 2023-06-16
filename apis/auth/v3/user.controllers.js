@@ -8,17 +8,17 @@ exports.register = asyncWrapper(async (req, res, next) => {
   req.body.password = await createPasswordHash(req.body.password);
   const user = await User.create(req.body);
   const token = createUserToken(user);
-  return res.status(StatusCodes.createUserToken).json(token);
+  return res.status(StatusCodes.CREATED).json(token);
 });
 
 exports.login = asyncWrapper(async (req, res) => {
   const token = createUserToken(req.user);
-  return res.status(StatusCodes.createUserToken).json(token);
+  return res.status(StatusCodes.OK).json(token);
 });
 
 exports.refreshJWTTokens = asyncWrapper(async (req, res, next) => {
   const token = createUserToken(req.user);
-  return res.status(StatusCodes.createUserToken).json(token);
+  return res.status(StatusCodes.OK).json(token);
 });
 
 exports.getLoggedInUserProfile = async (req, res) => {

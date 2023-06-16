@@ -6,6 +6,8 @@ const accountSchemas = require("../../../utils/validators/account.validators");
 const populateUserAccount = require("../../../middlewares/banks/populateUserAccount");
 const accountControllers = require("./account.controllers");
 
+router.use(multer().none())
+
 router.param("username", async (req, res, next, username) => {
   try {
     const foundUser = await accountControllers.getAccountByUserName(username);
@@ -22,11 +24,9 @@ router.param("username", async (req, res, next, username) => {
   }
 });
 
-
 router.post(
   "/create-account",
   passportAuthenticator("jwt"),
-  multer().none(),
   validationWrapper(accountSchemas.createAccountValidationSchema),
   populateUserAccount,
   accountControllers.createBankAccount
@@ -48,7 +48,6 @@ router.get(
 router.post(
   "/deposit",
   passportAuthenticator("jwt"),
-  multer().none(),
   validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
   accountControllers.depositAmount
@@ -57,7 +56,6 @@ router.post(
 router.post(
   "/withdraw",
   passportAuthenticator("jwt"),
-  multer().none(),
   validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
   accountControllers.withdrawAmount
@@ -65,7 +63,6 @@ router.post(
 router.post(
   "/transfer/:username",
   passportAuthenticator("jwt"),
-  multer().none(),
   validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
   accountControllers.transferAmount
