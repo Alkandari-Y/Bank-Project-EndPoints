@@ -3,7 +3,7 @@
 | Get users                   | `GET`  | `https://coded-projects-api.herokuapp.com/api/auth/v3/users`              | `no data required`                                   | NA                                 |
 | Login                       | `POST` | `https://coded-projects-api.herokuapp.com/api/auth/v3/login`              | `username password image`                            | NA                                 |
 | Register                    | `POST` | `https://coded-projects-api.herokuapp.com/api/auth/v3/register`           | `username password`                                  | NA                                 |
-| Refresh                     | `POST` | `https://coded-projects-api.herokuapp.com/api/auth/v3/refresh`            | `refresh token`                                      | `Refresh token set in headers`     |
+| Refresh                     | `GET` | `https://coded-projects-api.herokuapp.com/api/auth/v3/refresh`            | `refresh token`                                      | `Refresh token set in headers`     |
 | Get User Profile            | `GET`  | `https://coded-projects-api.herokuapp.com/api/auth/v3/profile`            | `no data required`                                   | NA                                 |
 | Update Profile              | `PUT`  | `https://coded-projects-api.herokuapp.com/api/auth/v3/profile`            | `password or image or both`                          | NA                                 |
 | Create Bank accounts        | `GET`  | `https://coded-projects-api.herokuapp.com/api/bank/v3/create-account`     | `optional amount - default amount without body is 0` | NA                                 |
