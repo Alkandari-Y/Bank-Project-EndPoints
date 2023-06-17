@@ -14,7 +14,7 @@ module.exports = (user, tokenType) => {
       username: user.username,
     };
     const token = jwt.sign(payload, JWT_SECRET, {
-      expiresIn: tokenType === "access" ? 60 * 60 * 5 : 60 * 60 * 24 * 5,
+      expiresIn: tokenType === "access" ? JWT_ACCESS_EXP : JWT_REFRESH_EXP,
     });
     return token;
   }
