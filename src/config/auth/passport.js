@@ -1,5 +1,6 @@
-const { JWT_SECRET } = require("../../config/jwtKeys");
-const User = require("../../db/models/User");
+const { StatusCodes } = require('http-status-codes');
+const { JWT_SECRET } = require("./jwtKeys");
+const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
@@ -20,7 +21,7 @@ exports.localStrategy = new LocalStrategy(
       if (passwordsMatch) return done(null, user);
 
       return done({
-        status: 401,
+        status: StatusCodes.UNAUTHORIZED,
         name: "Authentication Error",
         message: "Invalid credentials",
       });
@@ -38,14 +39,14 @@ exports.jwtStrategy = new JWTStrategy(
   async (jwtPayload, done) => {
     if (Date.now() > jwtPayload.exp * 1000) {
       return done({
-        status: 401,
+        status: StatusCodes.UNAUTHORIZED,
         name: "Authentication Error",
         message: "Invalid token",
       });
     }
     try {
       const user = await User.findById(jwtPayload._id);
-      done(null, user);
+      done(null, user, jwtPayload);
     } catch (error) {
       done(error);
     }

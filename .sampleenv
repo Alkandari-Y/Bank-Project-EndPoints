@@ -1,4 +1,5 @@
 PORT = 8000;
 MONGODB_URL = url;
 JWT_SECRET = someSuperSecretThing;
-JWT_EXP = 5m;
+JWT_ACCESS_EXP=5h
+JWT_REFRESH_EXP=5d

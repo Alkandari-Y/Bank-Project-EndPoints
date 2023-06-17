@@ -1,13 +1,16 @@
 const router = require("express").Router();
-const passport = require("passport");
-const validationWrapper = require("../../../middlewares/wrappers/validationWrapper");
+const multer = require("multer");
+const passportAuthenticator = require("../../../middlewares/auth/passportAuth");
+const validationWrapper = require("../../../utils/wrappers/validationWrapper");
 const accountSchemas = require("../../../utils/validators/account.validators");
 const populateUserAccount = require("../../../middlewares/banks/populateUserAccount");
 const accountControllers = require("./account.controllers");
 
+router.use(multer().none());
+
 router.param("username", async (req, res, next, username) => {
   try {
-    const foundUser = await accountControllers.getAccountByUserName(username);
+    const foundUser = await accountControllers.getAccountByUserName(username, next);
     if (!foundUser)
       return next({
         status: 404,
@@ -21,22 +24,30 @@ router.param("username", async (req, res, next, username) => {
   }
 });
 
+router.post(
+  "/create-account",
+  passportAuthenticator("jwt"),
+  validationWrapper(accountSchemas.createAccountValidationSchema),
+  populateUserAccount,
+  accountControllers.createBankAccount
+);
+
 router.get(
   "/balance",
-  passport.authenticate("jwt", { session: false }),
+  passportAuthenticator("jwt"),
   populateUserAccount,
   accountControllers.getUserAccount
 );
 
 router.get(
   "/transactions",
-  passport.authenticate("jwt", { session: false }),
+  passportAuthenticator("jwt"),
   accountControllers.getUserTransactions
 );
 
 router.post(
   "/deposit",
-  passport.authenticate("jwt", { session: false }),
+  passportAuthenticator("jwt"),
   validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
   accountControllers.depositAmount
@@ -44,17 +55,23 @@ router.post(
 
 router.post(
   "/withdraw",
-  passport.authenticate("jwt", { session: false }),
+  passportAuthenticator("jwt"),
   validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
   accountControllers.withdrawAmount
 );
 router.post(
   "/transfer/:username",
-  passport.authenticate("jwt", { session: false }),
+  passportAuthenticator("jwt"),
   validationWrapper(accountSchemas.amountValidationSchema),
   populateUserAccount,
   accountControllers.transferAmount
+);
+
+router.get(
+  "/user-accounts",
+  passportAuthenticator("jwt"),
+  accountControllers.getUsersAndAccounts
 );
 
 module.exports = router;

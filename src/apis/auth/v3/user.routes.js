@@ -1,15 +1,17 @@
 const router = require("express").Router();
+const multer = require("multer")
 const imageUpload = require("../../../middlewares/uploads/imageUpload");
 const imageToBody = require("../../../middlewares/uploads/imageToBody");
-const validationWrapper = require("../../../middlewares/wrappers/validationWrapper");
-const passport = require("passport");
+const validationWrapper = require("../../../utils/wrappers/validationWrapper");
 const authSchemas = require("../../../utils/validators/auth.validators");
 const authControllers = require("./user.controllers");
+const passportAuthenticator = require("../../../middlewares/auth/passportAuth");
 
 router.post(
   "/login",
+  multer().none(),
   validationWrapper(authSchemas.loginValidationSchema),
-  passport.authenticate("local", { session: false }),
+  passportAuthenticator("local"),
   authControllers.login
 );
 router.post(
@@ -21,20 +23,25 @@ router.post(
 );
 
 router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
-  authControllers.getLoggedInUserProfile
+  "/refresh",
+  passportAuthenticator("jwt", refresh=true),
+  authControllers.refreshJWTTokens
 );
 
 router.get(
   "/users",
-  passport.authenticate("jwt", { session: false }),
   authControllers.getUsers
+);
+
+router.get(
+  "/profile",
+  passportAuthenticator("jwt"),
+  authControllers.getLoggedInUserProfile
 );
 
 router.put(
   "/profile",
-  passport.authenticate("jwt", { session: false }),
+  passportAuthenticator("jwt"),
   imageUpload.single("image"),
   imageToBody,
   validationWrapper(authSchemas.userValidationSchema),
