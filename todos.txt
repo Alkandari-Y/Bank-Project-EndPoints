@@ -1,4 +1,4 @@
 create custom errors 
 create custom errors
 handle mongo db errors
-
+dockerize with redis for ip blocking + mongodb tracking of blocked ips
