@@ -10,7 +10,7 @@ router.use(multer().none());
 
 router.param("username", async (req, res, next, username) => {
   try {
-    const foundUser = await accountControllers.getAccountByUserName(username);
+    const foundUser = await accountControllers.getAccountByUserName(username, next);
     if (!foundUser)
       return next({
         status: 404,

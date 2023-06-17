@@ -10,7 +10,7 @@ const asyncWrapper = require("../../../utils/wrappers/asyncWrapper");
 due to use of multer parsing form data and bodyParser for urlEncoding
 */
 
-exports.getAccountByUserName = async (username) => {
+exports.getAccountByUserName = async (username, next) => {
   try {
     const foundUser = await User.findOne({ username }).populate("account");
     return foundUser;
